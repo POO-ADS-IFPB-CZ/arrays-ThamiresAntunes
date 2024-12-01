@@ -31,6 +31,8 @@ public class Produto {
         this.descricao = descricao;
     }
 
+    public double getPreco() { return preco; }
+
     public Categoria getCategoria() {
         return categoria;
     }

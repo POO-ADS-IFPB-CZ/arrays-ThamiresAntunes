@@ -40,4 +40,12 @@ public class Item {
         return produto.preco*quantidade;
     }
 
+    @Override
+    public String toString() {
+        return "Item{" +
+                "codigo=" + codigo +
+                ", produto=" + produto +
+                ", quantidade=" + quantidade +
+                '}';
+    }
 }
