@@ -68,13 +68,13 @@ public class Venda {
         System.out.print("Informe o nome do item que deseja remover: ");
         String nomeProduto = scanner.nextLine();
 
-        for(int i = 0; i < itens.length; i++){
+        for(int i = 0; i < quantidadeItens; i++){
             Produto produto = itens[i].getProduto();
             if(produto.getDescricao().equals(nomeProduto)){
-                for(int k = i; k < itens.length -1; k++){
+                for(int k = i; k < quantidadeItens -1; k++){
                     itens[k] = itens[k+1];
                 }
-                itens[itens.length-1] = null;
+                itens[quantidadeItens-1] = null;
                 quantidadeItens--;
                 itemRemovido = true; break;
 
