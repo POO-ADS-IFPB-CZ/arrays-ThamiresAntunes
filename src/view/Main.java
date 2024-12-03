@@ -9,7 +9,7 @@ import model.Venda;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int opcao, contadorItem = 0;
+        int opcao, totalItem = 0;
         Venda venda = new Venda();
 
         do{
@@ -19,16 +19,17 @@ public class Main {
 
             switch (opcao){
                 case 1: venda.preencherItem(venda); break;
-                case 2: venda.removerItem(venda); break;
+                case 2: venda.removerItem(); break;
                 case 3: System.out.println(venda.getTotal()); break;
                 case 4: venda.exibirProdutos(); break;
                 case 0: System.out.println("Finalizando compra");
+                        totalItem = venda.getItens().length;
+                        System.out.println("Total de itens comprados: " + totalItem);
                         System.out.println("O valor total da compra foi " + "R$" + venda.getTotal()); break;
             }
 
         }
         while(opcao != 0);
-
 
     }
 }

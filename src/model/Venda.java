@@ -25,6 +25,7 @@ public class Venda {
     }
 
     public boolean adicionarItem(Item item){
+        //array cheio, aumentá-lo
         if(quantidadeItens == itens.length){
             itens = Arrays.copyOf(itens, itens.length+3);
         }
@@ -32,53 +33,60 @@ public class Venda {
         return true;
     }
 
+    public Venda preencherItem(Venda venda) {
+        Scanner scanner = new Scanner(System.in);
 
-        public Venda preencherItem(Venda venda) {
-            Scanner scanner = new Scanner(System.in);
+        System.out.print("Código do produto: ");
+        int codigoProduto = scanner.nextInt();
+        scanner.nextLine();
 
-            System.out.print("Código do produto: ");
-            int codigoProduto = scanner.nextInt();
-            scanner.nextLine();
+        System.out.print("Descrição do produto: ");
+        String descricao = scanner.nextLine();
 
-            System.out.print("Descrição do produto: ");
-            String descricao = scanner.nextLine();
+        System.out.print("Preço do produto: ");
+        double preco = scanner.nextDouble();
 
-            System.out.print("Preço do produto: ");
-            double preco = scanner.nextDouble();
+        System.out.println("Categorias disponíveis: ALIMENTICIO, HIGIENE, LIMPEZA, HORTIFRUTI, PADARIA");
+        System.out.print("Categoria do produto: ");
+        String categoriaInput = scanner.next().toUpperCase();
+        Categoria categoria = Categoria.valueOf(categoriaInput);
 
-            System.out.println("Categorias disponíveis: ALIMENTICIO, HIGIENE, LIMPEZA, HORTIFRUTI, PADARIA");
-            System.out.print("Categoria do produto: ");
-            String categoriaInput = scanner.next().toUpperCase();
-            Categoria categoria = Categoria.valueOf(categoriaInput);
+        System.out.print("Quantidade do item: ");
+        int quantidade = scanner.nextInt();
 
-            System.out.print("Quantidade do item: ");
-            int quantidade = scanner.nextInt();
-
-            Item item = new Item(codigoProduto,
-                    new Produto(codigoProduto, descricao, preco, categoria), quantidade);
-            venda.adicionarItem(item);
-            System.out.println("Item adicionado com sucesso!");
+        Item item = new Item(codigoProduto,
+                new Produto(codigoProduto, descricao, preco, categoria), quantidade);
+        venda.adicionarItem(item);
+        System.out.println("Item adicionado com sucesso!");
         return venda;
     }
 
-    public void removerItem(Venda venda){
-        Scanner scanner = new Scanner(System.in);
-        Item[] itens = venda.getItens();
-        boolean itemRemovido = false;
-        System.out.print("Informe o nome do item que deseja remover: ");
-        String nomeProduto = scanner.nextLine();
-
+    public int buscar(String nome){
         for(int i = 0; i < quantidadeItens; i++){
             Produto produto = itens[i].getProduto();
-            if(produto.getDescricao().equals(nomeProduto)){
-                for(int k = i; k < quantidadeItens -1; k++){
-                    itens[k] = itens[k+1];
-                }
-                itens[quantidadeItens-1] = null;
-                quantidadeItens--;
-                itemRemovido = true; break;
-
+            if(produto.getDescricao().equals(nome)){
+                return i;
             }
+        }
+        return -1;
+    }
+
+    public boolean removerItem(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Informe o nome do item que deseja remover: ");
+        String nomeProduto = scanner.nextLine();
+        int posicao = buscar(nomeProduto);
+        if(posicao != -1){
+            for(int k = posicao; k < quantidadeItens -1; k++){
+                itens[k] = itens[k+1];
+            }
+            itens[quantidadeItens-1] = null;
+            quantidadeItens--;
+            return true;
+        }
+        else{ //nao achou o item
+            return false;
         }
 
     }
